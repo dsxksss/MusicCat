@@ -3,6 +3,7 @@
 ## 简约UI读取本地音频的音乐播放器
 ## 使用技术栈
 - vue3
+- howler.js
 - tailwindcss
 - daisyUI
 
