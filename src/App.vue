@@ -145,19 +145,21 @@ watch(formatTotalTime, () => {
 
 <template>
   <div class="transition-all h-screen w-screen flex justify-center items-center">
-    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3 justify-center">
+    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3 justify-center w-[20%]">
 
       <div class="space-y-2">
         <p>歌手:</p>
         <input type="text" maxlength=8 v-model="singer" class="input input-bordered input-success w-full max-w-xs">
       </div>
 
-      <div class="space-y-4">
+      <div class="space-y-4 ">
         <div class="space-y-2">
           <p>封面图片:</p>
           <input type="text" v-model="imageUrl" class="input input-bordered input-success w-full max-w-xs">
         </div>
-        <img alt="图片加载错误" :src="imageUrl" class="bg-cover h-[50%] w-[50%] rounded-2xl shadow-2xl" />
+        <figure class="bg-cover  bg-bottom">
+              <img alt="图片加载错误" :src="imageUrl" />
+          </figure>
       </div>
 
       <div class="space-y-2">
