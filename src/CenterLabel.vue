@@ -5,6 +5,8 @@ import { inject, ref } from "vue"
 const playAudio = inject("playAudio")
 const pauseAudio = inject("pauseAudio")
 const isPlaying = inject("isPlaying")
+const title = inject("title")
+const singer = inject("singer")
 
 
 const icons = ref([
@@ -43,18 +45,18 @@ function stop() {
 </script>
 
 <template>
-    <div class="h-[30%]">
+    <div class="h-[33%]">
         <div class="mx-6">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between md:mt-4 items-center">
                 <div>
                     <div class="md:space-x-2">
                         <button class="btn btn-ghost btn-circle" v-for="icon in icons" :key="icon.key">
                             <component :is="icon.component" :class="`w-7 h-7 ${icon.iconColor}`"></component>
                         </button>
                     </div>
-                    <div class="space-y-3 mt-2 mx-2">
-                        <div class="font-bold text-2xl">标题</div>
-                        <div class="font-bold text-xl text-gray-400/80">歌手</div>
+                    <div class="space-y-2 md:space-y-3 md:mt-2 mt-1 mx-2">
+                        <div class="text-left oldstyle-nums font-bold text-[1.25rem] sm:text-2xl text-ellipsis">{{ title }}</div>
+                        <div class="text-left oldstyle-nums font-bold text-[1.2rem] sm:text-lg text-gray-400/80 text-ellipsis">{{ singer }}</div>
                     </div>
                 </div>
                 <button v-if="!isPlaying" @click="play"

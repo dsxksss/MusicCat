@@ -1,6 +1,6 @@
 <script setup>
 import Container from './Container.vue';
-import { ref, provide, onMounted, onUnmounted, watch } from "vue"
+import { ref, provide, watch } from "vue"
 import { Howl } from 'howler';
 
 let timer = null
@@ -8,9 +8,12 @@ let sound = ref(null)
 const startTime = ref(0)
 const elapsedTime = ref(0)
 const totalTime = ref(0)
-const formatElapsedTime = ref("")
-const formatTotalTime = ref("")
+const formatElapsedTime = ref("00:00")
+const formatTotalTime = ref("00:00")
+const title = ref("歌曲标题")
+const singer = ref("歌曲原唱")
 const isPlaying = ref(false)
+const isCanShowMusicPlayer = ref(false)
 
 
 const onFileChange = event => {
@@ -23,6 +26,10 @@ const onFileChange = event => {
         src: data,
         loop: false,
         format: file.name.split('.').pop().toLowerCase(),
+        onload: function () {
+          updateStatus()
+          title.value = file.name.split('.')[0]
+        }
       });
     });
     reader.readAsDataURL(file);
@@ -41,10 +48,12 @@ function pauseAudio() {
   updateStatus()
 }
 
-function setAudioPlayTime(seek){
+function setAudioPlayTime(seek) {
+  clearTimer()
   sound.value.stop()
   sound.value.seek(seek)
   sound.value.play()
+  updateTime()
   updateStatus()
 }
 
@@ -55,19 +64,19 @@ function stopAudio() {
 }
 
 function updateTime() {
-  if(!timer){
-    timer = setInterval(()=>{
-      if(!sound.value.playing() && sound.value.seek() === 0){
+  if (!timer) {
+    timer = setInterval(() => {
+      if (!sound.value.playing() && sound.value.seek() === 0) {
         console.log("计时器停止");
         stopAudio()
-      }else{
+      } else {
         updateStatus()
       }
-    },1000)
+    }, 1000)
   }
 }
 
-function updateStatus(){
+function updateStatus() {
   totalTime.value = sound.value.duration();
   elapsedTime.value = sound.value.seek()
   formatTotalTime.value = formatTime(Math.round(sound.value.duration()));
@@ -75,7 +84,7 @@ function updateStatus(){
   isPlaying.value = sound.value.playing()
 }
 
-function clearTimer(){
+function clearTimer() {
   clearInterval(timer)
   timer = null
 }
@@ -87,12 +96,20 @@ function formatTime(secs) {
   return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 }
 
+function ShowMusicPlayer() {
+  if (sound.value && singer != '歌曲原唱'){
+    isCanShowMusicPlayer.value = true;
+  }
+}
+
 provide("isPlaying", isPlaying)
 provide("startTime", startTime)
 provide("elapsedTime", elapsedTime)
 provide("totalTime", totalTime)
 provide("formatElapsedTime", formatElapsedTime)
 provide("formatTotalTime", formatTotalTime)
+provide("title", title)
+provide("singer", singer)
 provide("playAudio", playAudio)
 provide("pauseAudio", pauseAudio)
 provide("stopAudio", stopAudio)
@@ -120,8 +137,12 @@ watch(formatTotalTime, () => {
 
 <template>
   <div class="transition-all h-screen w-screen flex justify-center items-center">
-    <input v-if="sound == null" class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load"
-      type="file" @change="onFileChange" accept=".mp3,.aac,.m4a" />
+    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3">
+      <input type="text" v-model="singer" class="input input-bordered input-success w-full max-w-xs">
+      <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
+        @change="onFileChange" accept=".mp3,.aac,.m4a" />
+        <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
+    </div>
     <Container v-else />
   </div>
 </template>

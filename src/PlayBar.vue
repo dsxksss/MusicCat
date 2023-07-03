@@ -1,6 +1,8 @@
 <script setup>
 import { inject } from "vue"
 const elapsedTime = inject("elapsedTime")
+const formatElapsedTime = inject("formatElapsedTime")
+const formatTotalTime = inject("formatTotalTime")
 const totalTime = inject("totalTime")
 const setAudioPlayTime = inject("setAudioPlayTime")
 
@@ -11,8 +13,18 @@ const onRangeChange = event => {
 </script>
 
 <template>
-    <div class="w-[100%] h-[20%] flex justify-center items-center">
-        <input type="range" @change="onRangeChange" min=0 :max=totalTime :value=elapsedTime>
+    <div class="h-[25%]">
+        <div class="flex justify-center items-center space-y-1 flex-col">
+            <div class="flex w-[100%] justify-between mt-1 px-8">
+                <div></div>
+                <div class="text-lg font-bold text-gray-300/60">{{ formatTotalTime }}</div>
+            </div>
+            <input type="range" @change="onRangeChange" min=0 :max=totalTime :value=elapsedTime>
+            <div class="flex w-[100%] justify-between px-8 pt-1">
+                <div class="text-lg font-bold text-gray-300/60">{{ formatElapsedTime }}</div>
+                <div></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -20,7 +32,7 @@ const onRangeChange = event => {
 input[type="range"] {
     -webkit-appearance: none;
     height: 8px;
-    width: 80%;
+    width: 82%;
     background: #697b8d;
     border-radius: 5px;
     background-size: 0% 100%;
