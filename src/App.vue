@@ -2,10 +2,14 @@
 import Container from './Container.vue';
 import { ref, provide, watch } from "vue"
 import { Howl } from 'howler';
+import { MoonIcon, SunIcon } from "@heroicons/vue/24/solid";
+
 
 const MAX_TITLE = 14
 let timer = null
 let sound = ref(null)
+const isDark = ref(true)
+const theme = ref("dark");
 const startTime = ref(0)
 const elapsedTime = ref(0)
 const totalTime = ref(0)
@@ -17,6 +21,10 @@ const imageUrl = ref("https://raw.githubusercontent.com/muhammederdem/mini-playe
 const isPlaying = ref(false)
 const isCanShowMusicPlayer = ref(false)
 
+function changeTheme(changeTheme) {
+  theme.value = changeTheme
+  isDark.value = !isDark.value
+}
 
 const onFileChange = event => {
   if (event.target.files.length > 0) {
@@ -109,6 +117,8 @@ function ShowMusicPlayer() {
   }
 }
 
+
+provide("isDark", isDark)
 provide("isPlaying", isPlaying)
 provide("startTime", startTime)
 provide("elapsedTime", elapsedTime)
@@ -144,32 +154,34 @@ watch(formatTotalTime, () => {
 </script>
 
 <template>
-  <div class="transition-all h-screen w-screen flex justify-center items-center">
-    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3 justify-center w-[20%]">
-
-      <div class="space-y-2">
-        <p>歌手:</p>
-        <input type="text" maxlength=8 v-model="singer" class="input input-bordered input-success w-full max-w-xs">
-      </div>
-
-      <div class="space-y-4 ">
+  <div :data-theme="theme">
+    <div class="transition-all h-screen w-screen flex justify-center duration-[0.2s] items-center">
+      <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3 justify-center w-[30%]">
         <div class="space-y-2">
-          <p>封面图片:</p>
-          <input type="text" v-model="imageUrl" class="input input-bordered input-success w-full max-w-xs">
+          <p>歌手:</p>
+          <input type="text" maxlength=8 v-model="singer" class="input input-bordered w-full max-w-xs">
         </div>
-        <figure class="bg-cover  bg-bottom">
-              <img alt="图片加载错误" :src="imageUrl" />
+        <div class="space-y-4 ">
+          <div class="space-y-2">
+            <p>封面图片:</p>
+            <input type="text" v-model="imageUrl" class="input input-bordered w-full max-w-xs">
+          </div>
+          <figure class="bg-cover  bg-bottom">
+            <img alt="图片加载错误" :src="imageUrl" />
           </figure>
+        </div>
+        <div class="space-y-2">
+          <p>播放的音乐:</p>
+          <input class="file-input file-input-bordered file w-full max-w-xs" id="load" type="file" @change="onFileChange"
+            accept=".mp3,.aac,.m4a,.flac" />
+        </div>
+        <button class="btn" @click="ShowMusicPlayer">进入</button>
       </div>
-
-      <div class="space-y-2">
-        <p>播放的音乐:</p>
-        <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
-          @change="onFileChange" accept=".mp3,.aac,.m4a,.flac" />
-      </div>
-
-      <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
+      <Container v-else />
     </div>
-    <Container v-else />
+    <button @click="changeTheme(isDark ? 'light' : 'dark')" class="fixed top-2 right-2 btn btn-lg btn-ghost btn-circle">
+      <MoonIcon v-if="isDark" class="w-8 h-8" />
+      <SunIcon v-else class="w-10 h-10" />
+    </button>
   </div>
 </template>

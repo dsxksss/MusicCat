@@ -50,7 +50,7 @@ function stop() {
             <div class="flex justify-between sm:mt-3 md:mt-4 items-center">
                 <div>
                     <div class="md:space-x-2">
-                        <button class="btn btn-ghost btn-circle" v-for="icon in icons" :key="icon.key">
+                        <button class="btn btn-ghost btn-circle transition-transform" v-for="icon in icons" :key="icon.key">
                             <component :is="icon.component" :class="`w-7 h-7 ${icon.iconColor}`"></component>
                         </button>
                     </div>
@@ -61,11 +61,11 @@ function stop() {
                     </div>
                 </div>
                 <button v-if="!isPlaying" @click="play"
-                    class="hover:scale-[1.2] md:hover:scale-[1.3] transition-all md:active:scale-[1.2] active:scale-[1.1]">
+                    class="hover:scale-[1.2] md:hover:scale-[1.3] transition-transform md:active:scale-[1.2] active:scale-[1.1]">
                     <PlayCircleIcon class="`w-24 h-24" />
                 </button>
                 <button v-else @click="stop"
-                    class="hover:scale-[1.2] md:hover:scale-[1.3] transition-all md:active:scale-[1.2] active:scale-[1.1]">
+                    class="hover:scale-[1.2] md:hover:scale-[1.3] transition-transform md:active:scale-[1.2] active:scale-[1.1]">
                     <StopCircleIcon class="`w-24 h-24" />
                 </button>
             </div>
