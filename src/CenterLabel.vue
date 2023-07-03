@@ -47,7 +47,7 @@ function stop() {
 <template>
     <div class="h-[33%]">
         <div class="mx-6">
-            <div class="flex justify-between md:mt-4 items-center">
+            <div class="flex justify-between sm:mt-3 md:mt-4 items-center">
                 <div>
                     <div class="md:space-x-2">
                         <button class="btn btn-ghost btn-circle" v-for="icon in icons" :key="icon.key">

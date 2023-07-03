@@ -15,7 +15,7 @@ const onRangeChange = event => {
 <template>
     <div class="h-[25%]">
         <div class="flex justify-center items-center space-y-1 sm:space-y-2 flex-col">
-            <div class="flex w-[100%] justify-between mt-1 px-8">
+            <div class="flex w-[100%] justify-between mt-1 md:mt-0 px-8">
                 <div></div>
                 <div class="text-lg font-bold text-gray-300/60">{{ formatTotalTime }}</div>
             </div>
