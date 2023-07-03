@@ -1,6 +1,9 @@
 # MusicCat 音乐🐱猫
 
 ## 简约UI读取本地音频的音乐播放器
+![][dark-screenshot]
+![][light-screenshot]
+
 ## 使用技术栈
 - vue3
 - howler.js
@@ -25,9 +28,6 @@ yarn dev
 npm run dev
 
 ```
-
-![][dark-screenshot]
-![][light-screenshot]
 
 [dark-screenshot]: images/dark.png
 [light-screenshot]: images/light.png
