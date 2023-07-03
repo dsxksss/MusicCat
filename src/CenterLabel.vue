@@ -55,8 +55,8 @@ function stop() {
                         </button>
                     </div>
                     <div class="space-y-2 md:space-y-3 md:mt-2 mt-1 mx-2">
-                        <div class="text-left oldstyle-nums font-bold text-[1.25rem] sm:text-2xl text-ellipsis">{{ title }}</div>
-                        <div class="text-left oldstyle-nums font-bold text-[1.2rem] sm:text-lg text-gray-400/80 text-ellipsis">{{ singer }}</div>
+                        <p class="text-left oldstyle-nums font-bold text-[1.25rem] sm:text-2xl">{{ title }}</p>
+                        <p class="text-left oldstyle-nums font-bold text-[1.2rem] sm:text-lg text-gray-400/80">{{ singer }}</p>
                     </div>
                 </div>
                 <button v-if="!isPlaying" @click="play"

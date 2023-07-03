@@ -3,6 +3,7 @@ import Container from './Container.vue';
 import { ref, provide, watch } from "vue"
 import { Howl } from 'howler';
 
+const MAX_TITLE = 14
 let timer = null
 let sound = ref(null)
 const startTime = ref(0)
@@ -14,6 +15,7 @@ const title = ref("歌曲标题")
 const singer = ref("歌曲原唱")
 const isPlaying = ref(false)
 const isCanShowMusicPlayer = ref(false)
+
 
 
 const onFileChange = event => {
@@ -28,7 +30,12 @@ const onFileChange = event => {
         format: file.name.split('.').pop().toLowerCase(),
         onload: function () {
           updateStatus()
-          title.value = file.name.split('.')[0]
+          const fileName = file.name.split('.')[0]
+          if (fileName.length >= MAX_TITLE) {
+            title.value = fileName.substring(0, MAX_TITLE)
+          } else {
+            title.value = fileName
+          }
         }
       });
     });
@@ -97,7 +104,7 @@ function formatTime(secs) {
 }
 
 function ShowMusicPlayer() {
-  if (sound.value && singer != '歌曲原唱'){
+  if (sound.value && singer.value != '歌曲原唱') {
     isCanShowMusicPlayer.value = true;
   }
 }
@@ -138,10 +145,10 @@ watch(formatTotalTime, () => {
 <template>
   <div class="transition-all h-screen w-screen flex justify-center items-center">
     <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3">
-      <input type="text" v-model="singer" class="input input-bordered input-success w-full max-w-xs">
+      <input type="text" maxlength=8 v-model="singer" class="input input-bordered input-success w-full max-w-xs">
       <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
         @change="onFileChange" accept=".mp3,.aac,.m4a" />
-        <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
+      <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
     </div>
     <Container v-else />
   </div>
