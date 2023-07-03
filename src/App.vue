@@ -13,6 +13,7 @@ const formatElapsedTime = ref("00:00")
 const formatTotalTime = ref("00:00")
 const title = ref("歌曲标题")
 const singer = ref("歌曲原唱")
+const imageUrl = ref("https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/5.jpg")
 const isPlaying = ref(false)
 const isCanShowMusicPlayer = ref(false)
 
@@ -116,6 +117,7 @@ provide("formatElapsedTime", formatElapsedTime)
 provide("formatTotalTime", formatTotalTime)
 provide("title", title)
 provide("singer", singer)
+provide("imageUrl", imageUrl)
 provide("playAudio", playAudio)
 provide("pauseAudio", pauseAudio)
 provide("stopAudio", stopAudio)
@@ -143,10 +145,27 @@ watch(formatTotalTime, () => {
 
 <template>
   <div class="transition-all h-screen w-screen flex justify-center items-center">
-    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3">
-      <input type="text" maxlength=8 v-model="singer" class="input input-bordered input-success w-full max-w-xs">
-      <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
-        @change="onFileChange" accept=".mp3,.aac,.m4a" />
+    <div v-if="!isCanShowMusicPlayer" class="flex flex-col space-y-3 justify-center">
+
+      <div class="space-y-2">
+        <p>歌手:</p>
+        <input type="text" maxlength=8 v-model="singer" class="input input-bordered input-success w-full max-w-xs">
+      </div>
+
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <p>封面图片:</p>
+          <input type="text" v-model="imageUrl" class="input input-bordered input-success w-full max-w-xs">
+        </div>
+        <img alt="图片加载错误" :src="imageUrl" class="bg-cover h-[50%] w-[50%] rounded-2xl shadow-2xl" />
+      </div>
+
+      <div class="space-y-2">
+        <p>播放的音乐:</p>
+        <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
+          @change="onFileChange" accept=".mp3,.aac,.m4a" />
+      </div>
+
       <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
     </div>
     <Container v-else />
