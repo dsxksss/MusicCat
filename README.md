@@ -11,10 +11,10 @@
 
 ```
 // 克隆仓库
-git clone https://github.com/dsxksss/musicCat.git
+git clone https://github.com/dsxksss/MusicCat.git
 
 // 进入项目目录
-cd musicCat
+cd MusicCat
 
 // npm或者yarn安装必要依赖
 yarn install
