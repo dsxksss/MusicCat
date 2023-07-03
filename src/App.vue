@@ -163,7 +163,7 @@ watch(formatTotalTime, () => {
       <div class="space-y-2">
         <p>播放的音乐:</p>
         <input class="file-input file-input-bordered file-input-success w-full max-w-xs" id="load" type="file"
-          @change="onFileChange" accept=".mp3,.aac,.m4a" />
+          @change="onFileChange" accept=".mp3,.aac,.m4a,.flac" />
       </div>
 
       <button class="btn btn-success" @click="ShowMusicPlayer">进入</button>
