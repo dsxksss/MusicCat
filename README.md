@@ -1,6 +1,6 @@
 # MusicCat 音乐🐱猫
 
-## 简约UI读取本地音频的音乐播放器
+## 简约主题UI 读取本地音频的音乐播放器
 ![][dark-screenshot]
 ![][light-screenshot]
 
@@ -9,6 +9,11 @@
 - howler.js
 - tailwindcss
 - daisyUI
+
+## 参考设计
+ Muhammed Erdem:Mini Music Player - VueJS [https://codepen.io/JavaScriptJunkie/pen/qBWrRyg]
+
+
 
 ## 本地运行
 
